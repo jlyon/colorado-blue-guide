@@ -49,7 +49,7 @@ Map = (options) ->
         setView: true
         maxZoom: @options.maxZoom
       )
-      $(@options.locate.html).bind "click", (e) ->
+      $(@options.locate.html).bind "click touchstart", (e) ->
         that.map.locate settings
         L.DomEvent.preventDefault e
       .appendTo "#map .leaflet-top.leaflet-left"
@@ -141,7 +141,7 @@ Map = (options) ->
           title: item["Clinic Name"]
         )
 
-        .on("click", (e) ->
+        .on("click touchstart", (e) ->
           $item = $results.find(".item[rel=" + @_leaflet_id + "]")
           $results.find('.item.active').removeClass "active"
           $item.addClass "active"
@@ -184,7 +184,7 @@ Map = (options) ->
         $resultItem.find(".close").bind "click", ->
           that.closeItem($(this).parents(".item"))
 
-        $resultItem.find(".btn-directions").bind "click", ->
+        $resultItem.find(".btn-directions").bind "click touchstart", ->
           if window.os is "android"
             navigator.app.loadUrl "http://maps.google.com/maps?daddr=" + item["Latitude"] + "," + item["Longitude"], { openExternal: true }
             #window.location = 'gps:' + item["Latitude"] + "," + item["Longitude"]

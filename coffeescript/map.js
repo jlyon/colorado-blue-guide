@@ -45,7 +45,7 @@ Map = function(options) {
         setView: true,
         maxZoom: this.options.maxZoom
       });
-      $(this.options.locate.html).bind("click", function(e) {
+      $(this.options.locate.html).bind("click touchstart", function(e) {
         that.map.locate(settings);
         return L.DomEvent.preventDefault(e);
       }).appendTo("#map .leaflet-top.leaflet-left");
@@ -129,7 +129,7 @@ Map = function(options) {
             color: item.color
           }),
           title: item["Clinic Name"]
-        }).on("click", function(e) {
+        }).on("click touchstart", function(e) {
           var $item;
           $item = $results.find(".item[rel=" + this._leaflet_id + "]");
           $results.find('.item.active').removeClass("active");
@@ -170,7 +170,7 @@ Map = function(options) {
         $resultItem.find(".close").bind("click", function() {
           return that.closeItem($(this).parents(".item"));
         });
-        $resultItem.find(".btn-directions").bind("click", function() {
+        $resultItem.find(".btn-directions").bind("click touchstart", function() {
           if (window.os === "android") {
             return navigator.app.loadUrl("http://maps.google.com/maps?daddr=" + item["Latitude"] + "," + item["Longitude"], {
               openExternal: true
