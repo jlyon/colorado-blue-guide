@@ -230,10 +230,14 @@
   box-shadow: none;
 }
 /* line 21, ../sass/components/_map.sass */
+.leaflet-top.leaflet-left div.leaflet-control-geosearch a:hover {
+  background-color: white;
+}
+/* line 24, ../sass/components/_map.sass */
 .leaflet-top.leaflet-left div.leaflet-control-geosearch form.displayNone {
   display: block;
 }
-/* line 26, ../sass/components/_map.sass */
+/* line 29, ../sass/components/_map.sass */
 .leaflet-top.leaflet-left div.leaflet-control-geosearch form input {
   height: 30px;
   background: white;
@@ -242,34 +246,34 @@
   margin-right: 10px;
   width: 95%;
 }
-/* line 34, ../sass/components/_map.sass */
+/* line 37, ../sass/components/_map.sass */
 .leaflet-top.leaflet-left div.leaflet-control-geosearch .leaflet-geosearch-autocomplete {
   position: absolute;
 }
-/* line 37, ../sass/components/_map.sass */
+/* line 40, ../sass/components/_map.sass */
 .leaflet-top.leaflet-left div.leaflet-control-geosearch a.leaflet-bar-part {
   top: 6px;
 }
-/* line 41, ../sass/components/_map.sass */
+/* line 44, ../sass/components/_map.sass */
 .leaflet-top.leaflet-left div.leaflet-control-geosearch #leaflet-control-geosearch-submit i {
   margin: 0;
 }
-/* line 44, ../sass/components/_map.sass */
+/* line 47, ../sass/components/_map.sass */
 .leaflet-top.leaflet-left .leaflet-control-locate {
   clear: none;
 }
-/* line 47, ../sass/components/_map.sass */
+/* line 50, ../sass/components/_map.sass */
 .leaflet-top.leaflet-left .leaflet-control-zoom {
   position: absolute;
   left: -45px;
 }
 
-/* line 52, ../sass/components/_map.sass */
+/* line 55, ../sass/components/_map.sass */
 .leaflet-container {
   font-family: "open-sans", sans-serif;
   font-size: 14px;
 }
-/* line 56, ../sass/components/_map.sass */
+/* line 59, ../sass/components/_map.sass */
 .leaflet-container .leaflet-popup-content-wrapper {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -277,11 +281,11 @@
   -o-border-radius: 0;
   border-radius: 0;
 }
-/* line 60, ../sass/components/_map.sass */
+/* line 63, ../sass/components/_map.sass */
 .leaflet-container .leaflet-popup-content-wrapper .fields .title {
   width: 4.5em;
 }
-/* line 63, ../sass/components/_map.sass */
+/* line 66, ../sass/components/_map.sass */
 .leaflet-container .leaflet-popup-content-wrapper .fields .value {
   margin-left: 5.5em;
 }

@@ -14,22 +14,22 @@
   z-index: 2;
 }
 
-.leaflet-control-geosearch a.glass {
+.leaflet-control-geosearch a.leaflet-geosearch-glass {
   background-image: url(../img/geosearch.png);
   background-size: 100% 100%;
 }
 
-.leaflet-control-geosearch a.spinner {
+.leaflet-control-geosearch a.leaflet-geosearch-spinner {
   background-image: url(../img/spinner.gif);
   background-position: 50% 50%;
 }
 
-.leaflet-control-geosearch a.alert {
+.leaflet-control-geosearch a.leaflet-geosearch-alert {
   background-image: url(../img/alert.png);
   background-size: 100% 100%;
 }
 
-.leaflet-control-geosearch i.marker {
+.leaflet-control-geosearch i.leaflet-geosearch-marker {
   background-image: url(../img/marker.png);
   background-size: 100% 100%;
   background-position: center center;
@@ -74,7 +74,7 @@
   padding: 8px 2px 5px 10px;
 }
 
-.leaflet-control-geosearch .message {
+.leaflet-control-geosearch .leaflet-geosearch-message {
   position: absolute;
   top: 26px;
   left: 0px;

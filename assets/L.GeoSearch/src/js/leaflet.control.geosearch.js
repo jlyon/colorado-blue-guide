@@ -77,7 +77,7 @@ L.Control.GeoSearch = (function(_super) {
       this._recordLastUserInput("");
       $(this._container).append(this._suggestionBox);
     }
-    this._message = L.DomUtil.create("div", "leaflet-bar message displayNone", this._container);
+    this._message = L.DomUtil.create("div", "leaflet-bar leaflet-geosearch-message displayNone", this._container);
     L.DomEvent.on(this._map, "click", (function() {
       return _this._hide();
     }));
@@ -103,7 +103,7 @@ L.Control.GeoSearch = (function(_super) {
 
   GeoSearch.prototype._changeIcon = function(icon) {
     this._btnSearch = this._container.querySelector("a");
-    return this._btnSearch.className = "leaflet-bar-part leaflet-bar-part-single" + " " + icon;
+    return this._btnSearch.className = "leaflet-bar-part leaflet-bar-part-single" + " leaflet-geosearch-" + icon;
   };
 
   GeoSearch.prototype._geosearch = function(qry) {

@@ -74,6 +74,7 @@ class L.Control.GeoSearch extends L.Control
       .on(input, "input", @_onInput, this)
 
     if L.Browser.touch
+      alert('asdf')
       L.DomEvent.on @_container, "click", L.DomEvent.stop
     else
       L.DomEvent.disableClickPropagation @_container
@@ -86,7 +87,7 @@ class L.Control.GeoSearch extends L.Control
       $(@_container).append @_suggestionBox
 
     # create the error @_message div
-    @_message = L.DomUtil.create("div", "leaflet-bar message displayNone", @_container)
+    @_message = L.DomUtil.create("div", "leaflet-bar leaflet-geosearch-message displayNone", @_container)
 
     # hide form when click on map
     L.DomEvent
@@ -117,7 +118,7 @@ class L.Control.GeoSearch extends L.Control
 
   _changeIcon: (icon) ->
     @_btnSearch = @_container.querySelector("a")
-    @_btnSearch.className = "leaflet-bar-part leaflet-bar-part-single" + " " + icon
+    @_btnSearch.className = "leaflet-bar-part leaflet-bar-part-single" + " leaflet-geosearch-" + icon
 
   _geosearch: (qry) ->
     try
