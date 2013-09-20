@@ -39,9 +39,9 @@ window.onload = ->
     jQuery.getJSON "json/data.json?rev="+rev, {}, (data) ->
       locache.set "blueGuideData", data
       query = new JsonQuery "body", data
-    
-  #alert $(window).height() + ',' + $(window).width()
   
+  # Manually set the map height with JS (couldn't make this work with CSS)
+  $('.row-fluid>div').height($(window).height() - $('.navbar').height())
 
   params = 
     id: "map"

@@ -24,9 +24,8 @@ Map = function(options) {
     this.map = new L.Map(this.options.id, {
       center: new L.LatLng(this.options.startLat, this.options.startLng),
       zoom: this.options.startZoom,
+      attributionControl: false,
       layers: new L.TileLayer(this.options.layerUrl)
-    }, {
-      attribution: '<span>Built by <a href="http://albatrossdigital.com" title="Albatross Digital">Albatross Digital</a> | </span><a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
     });
     this.markerLayer.addTo(this.map);
     this.homeMarkerLayer.addTo(this.map);

@@ -445,7 +445,7 @@
   }
 
   /* line 29, ../sass/components/_responsive-desktop.sass */
-  .left-sidebar #results,
+  .left-sidebar,
   .right-sidebar {
     height: 100%;
     overflow-x: hidden;
@@ -1137,6 +1137,17 @@ label {
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #265288;
+}
+
+/* line 97, ../sass/components/_style.sass */
+.attribution {
+  font-size: 0.9em;
+  margin: 1em 0 1em 45px;
+  line-height: 1.5em;
+}
+/* line 102, ../sass/components/_style.sass */
+.attribution .small {
+  font-size: 0.9em;
 }
 
 /* No files to import found in includes/* */
