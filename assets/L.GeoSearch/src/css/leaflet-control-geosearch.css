@@ -12,6 +12,7 @@
   border-bottom: none;
   position: relative;
   z-index: 2;
+  outline: 0;
 }
 
 .leaflet-control-geosearch a.leaflet-geosearch-glass {

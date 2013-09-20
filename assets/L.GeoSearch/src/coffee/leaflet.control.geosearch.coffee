@@ -68,7 +68,7 @@ class L.Control.GeoSearch extends L.Control
           $(input).focus()
           $(input).trigger "click"
         else
-          @_hide()
+          if not @options.open then @_hide()
 
     #create events for the input
     L.DomEvent

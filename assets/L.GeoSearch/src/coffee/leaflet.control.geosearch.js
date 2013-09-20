@@ -77,7 +77,9 @@ L.Control.GeoSearch = (function(_super) {
         $(input).focus();
         return $(input).trigger("click");
       } else {
-        return _this._hide();
+        if (!_this.options.open) {
+          return _this._hide();
+        }
       }
     });
     L.DomEvent.on(input, "keyup", this._onKeyUp, this).on(input, "keypress", this._onKeyPress, this).on(input, "input", this._onInput, this);
