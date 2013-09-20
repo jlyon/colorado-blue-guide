@@ -9,49 +9,45 @@ Map = (options) ->
     startLat: 0
     startLng: 0
     startZoom: 8
-    maxZoom: 14
     pagerSize: 25
-    #maxMarkers: 25 #@todo: rm
   , options)
-
+  
   #this.markers = {};
   @markerLayer = new L.FeatureGroup()
   @homeMarkerLayer = new L.FeatureGroup()
   @resultNum = @options.resultNum
-  @init = false;
 
   @drawMap = ->
+    
     # Create the map
     @map = new L.Map(@options.id,
       center: new L.LatLng(@options.startLat, @options.startLng)
       zoom: @options.startZoom
-      layers: new L.TileLayer @options.layerUrl,
-        attribution: '<span>Built by <a href="http://albatrossdigital.com" title="Albatross Digital">Albatross Digital</a> | </span><a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
+      layers: new L.TileLayer(@options.layerUrl)
     )
     @markerLayer.addTo @map
     @homeMarkerLayer.addTo @map
+    $("#map .leaflet-control-container").append ich.about()
 
     # Add the geosearch control
-    if @options.geosearch?
+    unless @options.geosearch is `undefined`
       settings = _.extend((if @options.geosearch.settings is `undefined` then {} else @options.geosearch.settings),
-        zoomLevel: @options.maxZoom
-        submitButton: true
+        zoomLevel: 15
       )
-
       settings.provider = new L.GeoSearch.Provider[@options.geosearch.provider]()
       new L.Control.GeoSearch(settings).addTo @map
 
     # Add the locate button
-    if @options.locate?
+    unless @options.locate is `undefined`
       locateUser = ->
         @map.locate settings
       settings = _.extend((if @options.locate.settings is `undefined` then {} else @options.locate.settings),
         setView: true
-        maxZoom: @options.maxZoom
+        maxZoom: 15
       )
-      $(@options.locate.html).bind "click", (e) ->
+      jQuery(@options.locate.html).bind "click", (e) ->
         that.map.locate settings
-      .appendTo "#map .leaflet-top.leaflet-left"
+      .appendTo "#map .leaflet-top.leaflet-center"
 
     return
 
@@ -69,14 +65,10 @@ Map = (options) ->
       title: "Home"
     ).addTo @homeMarkerLayer
 
-  @drawMarkers = (data, pagerStart) ->
-    if !@init
-      @init = true
-      return
-
+  @drawMarkers = (data) ->
     @markerLayer.clearLayers()
-    @pagerStart = if pagerStart? then pagerStart else 0
-
+    @pagerStart = 0
+    
     # Re-order data array by distance to this.location
     location = (if @location isnt `undefined` then @location else @map.getCenter())
     _.each data, (item, index) ->
@@ -92,25 +84,22 @@ Map = (options) ->
       tab.title is activeTab
     )[0].color else false)
 
-    # Cycle through each item and add a marker
+    # Prep the #results div
     $results.html ""
     if data.length is 0
       $results.append ich.noResults()
     else
-      if data.length <= @resultNum
+      if data.length <= @resultNum 
         $text = ich.resultSummaryMatching
           num: data.length
       else
-        #@drawPagerSummary(data).appendTo $results
-        @drawPager(data).appendTo $results
-
+        @drawPager(data.length).appendTo $results
 
     # Cycle through each item and add a marker
-    pagerEnd = if @pagerStart+@options.pagerSize < data.length then @pagerStart+@options.pagerSize else data.length
-
+    pagerEnd = if @pagerStart+@options.pagerSize > data.length then @pagerStart else data.length
     for index in [@pagerStart..pagerEnd]
       item = data[index];
-      if item? and item.Latitude? and item.Longitude?
+      if item.Latitude isnt `undefined` and item.Longitude isnt `undefined` and index <= that.resultNum
 
         # Build the fields html
         item.fields = ""
@@ -129,8 +118,8 @@ Map = (options) ->
 
         # Add the marker
         item.color = (if activeColor then activeColor else that.iconColor(item["Services Provided"]))
-        item["Phone Number"] = item["Phone Number"] + " |" if item["Phone Number"] isnt "" and item["Phone Number"].indexOf "|" is -1
-
+        item["Phone Number"] = item["Phone Number"] + " |" if item["Phone Number"] isnt ""
+        
         marker = L.marker([item.Latitude, item.Longitude],
           icon: L.AwesomeMarkers.icon(
             text: index
@@ -142,9 +131,10 @@ Map = (options) ->
 
         .on("click", (e) ->
           $item = $results.find(".item[rel=" + @_leaflet_id + "]")
-          $results.find('.item.active').removeClass "active"
           $item.addClass "active"
-          that.scroll $results, $item
+          $("html, body").animate
+            scrollTop: $item.offset().top - 70
+          , 1000
         )
 
         if that.options.showPopup
@@ -158,104 +148,67 @@ Map = (options) ->
           )
 
         marker.addTo(that.markerLayer)
-
+        
         # Add the item to the results sidebar
         item.id = marker._leaflet_id
         item.letter = marker.options.icon.num2letter(index)
         item.distance = Math.round(item.distance * 10) / 10
         $resultItem = ich.listItem(item)
 
-        $resultItem.find(".static-marker, h3 a").bind "click", (e) ->
+        $resultItem.find(".static-marker, h3 a").bind "click", ->
           $item = $(this).parents(".item")
-          if $item.hasClass "active"
-            that.closeItem $item, true
-          else
-            marker = that.markerLayer._layers[$item.attr("rel")]
-            #marker.zIndexOffset 1000
-            that.map.panTo(marker._latlng)
-            if window.responsive is "mobile"
-              $item.parent().find('.item.active').removeClass "active"
-            else
-              marker.openPopup()
-            $item.addClass "active"
+          marker = that.markerLayer._layers[$item.attr("rel")]
+          marker.openPopup()
+          that.map.panTo(marker._latlng)
+          if window.responsive is "mobile"
+            $item.parent().find('.item').removeClass "active"
+            $("html, body").animate
+              scrollTop: $item.offset().top - 70
+            , 1000
+          $item.addClass "active"
           false
 
         $resultItem.find(".close").bind "click", ->
-          that.closeItem($(this).parents(".item"))
+          $item = $(this).parents(".item")
+          $item.removeClass "active"
+          if window.responsive isnt "mobile"
+            that.markerLayer._layers[$item.attr("rel")].closePopup()
+          else
+            $(that.updateSelector).removeClass "left-sidebar-big"
+            $("html, body").animate
+              scrollTop: -66
+            , 500
 
         $resultItem.find(".btn-directions").bind "click", ->
-          if window.os is "android"
-            navigator.app.loadUrl "http://maps.google.com/maps?daddr=" + item["Latitude"] + "," + item["Longitude"], { openExternal: true }
-            #window.location = 'gps:' + item["Latitude"] + "," + item["Longitude"]
-          else if window.os is "ios"
-            window.location = 'maps:' + item["Latitude"] + "," + item["Longitude"]
-          else
-            window.open "http://maps.google.com/maps?daddr=" + item["Latitude"] + "," + item["Longitude"]
-
-        if window.os is "android" or window.os is "ios"
-          $resultItem.find(".website").bind "click", ->
-            navigator.app.loadUrl $(this).attr "href", { openExternal: true }
-            false
+          window.open "http://maps.google.com/maps?daddr=" + item["Latitude"] + "," + item["Longitude"]
 
         $results.append $resultItem
 
-    if data.length > @resultNum then @drawPager(data).appendTo $results
     @lastBounds = @map.getBounds()
-    @forceZoom = undefined
-    @scroll "body", 0
-    $("body").removeClass "loading"
     return
 
-  @scroll = (parent, element) ->
-    if window.responsive is "mobile"
-      parent = "body"
-      top = if element is 0 then 0 else $(element).offset().top - 75
-    else
-      top = if element is 0 then 0 else $(parent).scrollTop() + $(element).offset().top - $(parent).offset().top
-    $(parent).animate({ scrollTop: top }, { duration: 'slow', easing: 'swing'})
-
-  @closeItem = ($item, noScroll) ->
-    $item.removeClass "active"
-    if window.responsive isnt "mobile"
-      that.markerLayer._layers[$item.attr("rel")].closePopup()
-    else
-      $(that.updateSelector).removeClass "left-sidebar-big"
-      if noScroll? and !noScroll
-        that.scroll $results, 0
-
-  @drawPagerSummary = (data) ->
-    return ich.pager
-      start: @pagerStart
-      end: if (@pagerStart + @options.pagerSize < data.length) then @pagerStart + @options.pagerSize else data.length
-      total: data.length
-
   @drawPager = (data) ->
-    $text = @drawPagerSummary data
+    $text = ich.pager
     $pager = $text.find "ul"
-    if @pagerStart > @options.pagerSize*2
-      min = @pagerStart - @options.pagerSize*2
-      endPages = 2
-    else
-      min = 0
-      endPages = 4 - @pagerStart/@options.pagerSize
-    max = (if data.length < @pagerStart + @options.pagerSize*endPages then data.length else @pagerStart + @options.pagerSize*endPages)
-    ich.pagerItem(num: "&laquo;", rel: @pagerStart-@options.pagerSize).appendTo $pager if @pagerStart > 0
-    for i in [min..max] by @options.pagerSize
+    min = (if @pagerStart > @options.pagerSize*2 then @pagerStart/@options.pagerSize - @options.pagerSize else 0)
+    max = (if data.length < @pagerStart + @options.pagerSize*2 then ceil data.length / @options.pagerSize else @pagerStart / @options.pagerSize + @options.pagerSize)
+    ich.pagerItem(num: "Prev", rel: @pagerStart-@options.pagerSize).appendTo $pager if @pagerStart > 0
+    for i in [min..max]
       $item = ich.pagerItem
-        num: i/@options.pagerSize + 1
-        rel: i
-        class: if @pagerStart == i then "active" else ""
+        num: i+1
+        rel: i*@options.pagerSize
+        active: if $pagerStart = i*@options.pagerSize then "active" else ""
       $item.appendTo $pager
-    ich.pagerItem(num: "&raquo;", rel: @pagerStart+@options.pagerSize).appendTo $pager if @pagerStart + @options.pagerSize < data.length
+    ich.pagerItem(num: "Next", rel: @pagerStart+@options.pagerSize).appendTo $pager if @pagerStart+@options.pagerSize >= data.length
     $text.find('a').bind "click", ->
-      that.drawMarkers data, parseInt $(this).attr "rel"
-      that.scroll $(that.options.resultsSelector), 0
+      @pagerStart = parseInt $(this).attr "rel"
+      @drawMarkers data
       false
     $text
 
+
   @markerBounds = (bounds, factor) ->
-    factor = if factor? then factor-1 else 1
-    factor = 0
+    factor = factor? ? factor-1 : 1
     lat = Math.abs(bounds._southWest.lat - bounds._northEast.lat) * factor
     lng = Math.abs(bounds._southWest.lng - bounds._northEast.lng) * factor
     "_southWest":
@@ -281,6 +234,6 @@ Map = (options) ->
   if @options.draw
     @drawMap()
     @drawMarkers @options.draw  unless typeof @options.draw is "boolean"
-
+  
   @
-
+  

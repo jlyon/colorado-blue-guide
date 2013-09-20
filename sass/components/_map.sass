@@ -2,25 +2,40 @@
   z-index: 0
 
   #geocode
-    z-index: 10
+    z-index: 3
 
-.leaflet-top.leaflet-center
+.leaflet-top.leaflet-left
   width: 100%
   margin-left: 50px
 
-  .leaflet-control-geosearch
-    background: none
+  div.leaflet-control-geosearch
+    background-color: $white
     float: left
     width: auto
     padding: 0
     margin-right: 1em
     width: 350px
+    border: 1px solid $orange !important
+    +box-shadow(none)
 
-    input
-      background: $white
-      width: 290px
-      float: left
-      margin-right: 10px
+    form.displayNone
+      display: block
+
+    form
+
+      input
+        height: 30px
+        background: $white
+        width: 290px
+        float: left
+        margin-right: 10px
+        width: 95%
+
+    .leaflet-geosearch-autocomplete
+      position: absolute
+
+    a.leaflet-bar-part
+      top: 6px
       
 
     #leaflet-control-geosearch-submit i
@@ -28,6 +43,10 @@
 
   .leaflet-control-locate
     clear: none
+
+  .leaflet-control-zoom
+    position: absolute
+    left: -45px
 
 
 .leaflet-container

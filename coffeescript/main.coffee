@@ -53,7 +53,9 @@ window.onload = ->
     geosearch:
       provider: "Google"
       settings:
+        searchLabel: "Search for address..."
         zoomLevel: 13 
+        showMarker: false
     locate: {html: ich.locateBtn()}   
     layerUrl: "http://a.tiles.mapbox.com/v3/albatrossdigital.map-i5m0mag7/{z}/{x}/{y}.png"
     fields: filters.displayFields
@@ -93,17 +95,18 @@ window.onload = ->
 
 
   # Add overlay (for start page)
+  
   if window.responsive is "mobile"
     $about = ich.about()
-    $search = $("#map .leaflet-top.leaflet-center").clone()
+    ###$search = $("#map .leaflet-top.leaflet-left").clone()
     #$search.find('.leaflet-control-geosearch').removeClass "leaflet-control-geosearch"
     $search.find('#leaflet-control-geosearch-submit').bind "click", ->
       $("#map #leaflet-control-geosearch-qry").val $(this).parent().find("#leaflet-control-geosearch-qry").val()
       $("#map #leaflet-control-geosearch-submit").trigger "click"
     $search.find('#geocode').bind "click", ->
-      $("#map #geocode").trigger "click"
+      $("#map #geocode").trigger "click"###
     $("#main").append $about
-    $("#main #about").append $search
+    #$("#main #about").append $search
   else
     $("#map .leaflet-control-container").prepend ich.about()
 

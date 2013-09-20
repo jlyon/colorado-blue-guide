@@ -11,43 +11,39 @@ Map = function(options) {
     startLat: 0,
     startLng: 0,
     startZoom: 8,
-    maxZoom: 14,
     pagerSize: 25
   }, options);
   this.markerLayer = new L.FeatureGroup();
   this.homeMarkerLayer = new L.FeatureGroup();
   this.resultNum = this.options.resultNum;
-  this.init = false;
   this.drawMap = function() {
     var locateUser, settings;
     this.map = new L.Map(this.options.id, {
       center: new L.LatLng(this.options.startLat, this.options.startLng),
       zoom: this.options.startZoom,
-      layers: new L.TileLayer(this.options.layerUrl, {
-        attribution: '<span>Built by <a href="http://albatrossdigital.com" title="Albatross Digital">Albatross Digital</a> | </span><a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
-      })
+      layers: new L.TileLayer(this.options.layerUrl)
     });
     this.markerLayer.addTo(this.map);
     this.homeMarkerLayer.addTo(this.map);
-    if (this.options.geosearch != null) {
+    $("#map .leaflet-control-container").append(ich.about());
+    if (this.options.geosearch !== undefined) {
       settings = _.extend((this.options.geosearch.settings === undefined ? {} : this.options.geosearch.settings), {
-        zoomLevel: this.options.maxZoom,
-        submitButton: true
+        zoomLevel: 15
       });
       settings.provider = new L.GeoSearch.Provider[this.options.geosearch.provider]();
       new L.Control.GeoSearch(settings).addTo(this.map);
     }
-    if (this.options.locate != null) {
+    if (this.options.locate !== undefined) {
       locateUser = function() {
         return this.map.locate(settings);
       };
       settings = _.extend((this.options.locate.settings === undefined ? {} : this.options.locate.settings), {
         setView: true,
-        maxZoom: this.options.maxZoom
+        maxZoom: 15
       });
-      $(this.options.locate.html).bind("click", function(e) {
+      jQuery(this.options.locate.html).bind("click", function(e) {
         return that.map.locate(settings);
-      }).appendTo("#map .leaflet-top.leaflet-left");
+      }).appendTo("#map .leaflet-top.leaflet-center");
     }
   };
   this.updateLocation = function(latlng) {
@@ -64,14 +60,10 @@ Map = function(options) {
       title: "Home"
     }).addTo(this.homeMarkerLayer);
   };
-  this.drawMarkers = function(data, pagerStart) {
+  this.drawMarkers = function(data) {
     var $resultItem, $results, $text, activeColor, index, item, location, marker, pagerEnd, _i, _ref;
-    if (!this.init) {
-      this.init = true;
-      return;
-    }
     this.markerLayer.clearLayers();
-    this.pagerStart = pagerStart != null ? pagerStart : 0;
+    this.pagerStart = 0;
     location = (this.location !== undefined ? this.location : this.map.getCenter());
     _.each(data, function(item, index) {
       item.id = index;
@@ -93,13 +85,13 @@ Map = function(options) {
           num: data.length
         });
       } else {
-        this.drawPager(data).appendTo($results);
+        this.drawPager(data.length).appendTo($results);
       }
     }
-    pagerEnd = this.pagerStart + this.options.pagerSize < data.length ? this.pagerStart + this.options.pagerSize : data.length;
+    pagerEnd = this.pagerStart + this.options.pagerSize > data.length ? this.pagerStart : data.length;
     for (index = _i = _ref = this.pagerStart; _ref <= pagerEnd ? _i <= pagerEnd : _i >= pagerEnd; index = _ref <= pagerEnd ? ++_i : --_i) {
       item = data[index];
-      if ((item != null) && (item.Latitude != null) && (item.Longitude != null)) {
+      if (item.Latitude !== undefined && item.Longitude !== undefined && index <= that.resultNum) {
         item.fields = "";
         item.primaryFields = "";
         _.each(that.options.fields, function(field) {
@@ -118,7 +110,7 @@ Map = function(options) {
           }
         });
         item.color = (activeColor ? activeColor : that.iconColor(item["Services Provided"]));
-        if (item["Phone Number"] !== "" && item["Phone Number"].indexOf("|" === -1)) {
+        if (item["Phone Number"] !== "") {
           item["Phone Number"] = item["Phone Number"] + " |";
         }
         marker = L.marker([item.Latitude, item.Longitude], {
@@ -131,9 +123,10 @@ Map = function(options) {
         }).on("click", function(e) {
           var $item;
           $item = $results.find(".item[rel=" + this._leaflet_id + "]");
-          $results.find('.item.active').removeClass("active");
           $item.addClass("active");
-          return that.scroll($results, $item);
+          return $("html, body").animate({
+            scrollTop: $item.offset().top - 70
+          }, 1000);
         });
         if (that.options.showPopup) {
           marker.bindPopup(ich.popupItem(item).html(), {
@@ -149,132 +142,80 @@ Map = function(options) {
         item.letter = marker.options.icon.num2letter(index);
         item.distance = Math.round(item.distance * 10) / 10;
         $resultItem = ich.listItem(item);
-        $resultItem.find(".static-marker, h3 a").bind("click", function(e) {
+        $resultItem.find(".static-marker, h3 a").bind("click", function() {
           var $item;
           $item = $(this).parents(".item");
-          if ($item.hasClass("active")) {
-            that.closeItem($item, true);
-          } else {
-            marker = that.markerLayer._layers[$item.attr("rel")];
-            that.map.panTo(marker._latlng);
-            if (window.responsive === "mobile") {
-              $item.parent().find('.item.active').removeClass("active");
-            } else {
-              marker.openPopup();
-            }
-            $item.addClass("active");
+          marker = that.markerLayer._layers[$item.attr("rel")];
+          marker.openPopup();
+          that.map.panTo(marker._latlng);
+          if (window.responsive === "mobile") {
+            $item.parent().find('.item').removeClass("active");
+            $("html, body").animate({
+              scrollTop: $item.offset().top - 70
+            }, 1000);
           }
+          $item.addClass("active");
           return false;
         });
         $resultItem.find(".close").bind("click", function() {
-          return that.closeItem($(this).parents(".item"));
-        });
-        $resultItem.find(".btn-directions").bind("click", function() {
-          if (window.os === "android") {
-            return navigator.app.loadUrl("http://maps.google.com/maps?daddr=" + item["Latitude"] + "," + item["Longitude"], {
-              openExternal: true
-            });
-          } else if (window.os === "ios") {
-            return window.location = 'maps:' + item["Latitude"] + "," + item["Longitude"];
+          var $item;
+          $item = $(this).parents(".item");
+          $item.removeClass("active");
+          if (window.responsive !== "mobile") {
+            return that.markerLayer._layers[$item.attr("rel")].closePopup();
           } else {
-            return window.open("http://maps.google.com/maps?daddr=" + item["Latitude"] + "," + item["Longitude"]);
+            $(that.updateSelector).removeClass("left-sidebar-big");
+            return $("html, body").animate({
+              scrollTop: -66
+            }, 500);
           }
         });
-        if (window.os === "android" || window.os === "ios") {
-          $resultItem.find(".website").bind("click", function() {
-            navigator.app.loadUrl($(this).attr("href", {
-              openExternal: true
-            }));
-            return false;
-          });
-        }
+        $resultItem.find(".btn-directions").bind("click", function() {
+          return window.open("http://maps.google.com/maps?daddr=" + item["Latitude"] + "," + item["Longitude"]);
+        });
         $results.append($resultItem);
       }
     }
-    if (data.length > this.resultNum) {
-      this.drawPager(data).appendTo($results);
-    }
     this.lastBounds = this.map.getBounds();
-    this.forceZoom = void 0;
-    this.scroll("body", 0);
-    $("body").removeClass("loading");
-  };
-  this.scroll = function(parent, element) {
-    var top;
-    if (window.responsive === "mobile") {
-      parent = "body";
-      top = element === 0 ? 0 : $(element).offset().top - 75;
-    } else {
-      top = element === 0 ? 0 : $(parent).scrollTop() + $(element).offset().top - $(parent).offset().top;
-    }
-    return $(parent).animate({
-      scrollTop: top
-    }, {
-      duration: 'slow',
-      easing: 'swing'
-    });
-  };
-  this.closeItem = function($item, noScroll) {
-    $item.removeClass("active");
-    if (window.responsive !== "mobile") {
-      return that.markerLayer._layers[$item.attr("rel")].closePopup();
-    } else {
-      $(that.updateSelector).removeClass("left-sidebar-big");
-      if ((noScroll != null) && !noScroll) {
-        return that.scroll($results, 0);
-      }
-    }
-  };
-  this.drawPagerSummary = function(data) {
-    return ich.pager({
-      start: this.pagerStart,
-      end: this.pagerStart + this.options.pagerSize < data.length ? this.pagerStart + this.options.pagerSize : data.length,
-      total: data.length
-    });
   };
   this.drawPager = function(data) {
-    var $item, $pager, $text, endPages, i, max, min, _i, _ref;
-    $text = this.drawPagerSummary(data);
+    var $item, $pager, $pagerStart, $text, i, max, min, _i;
+    $text = ich.pager;
     $pager = $text.find("ul");
-    if (this.pagerStart > this.options.pagerSize * 2) {
-      min = this.pagerStart - this.options.pagerSize * 2;
-      endPages = 2;
-    } else {
-      min = 0;
-      endPages = 4 - this.pagerStart / this.options.pagerSize;
-    }
-    max = (data.length < this.pagerStart + this.options.pagerSize * endPages ? data.length : this.pagerStart + this.options.pagerSize * endPages);
+    min = (this.pagerStart > this.options.pagerSize * 2 ? this.pagerStart / this.options.pagerSize - this.options.pagerSize : 0);
+    max = (data.length < this.pagerStart + this.options.pagerSize * 2 ? ceil(data.length / this.options.pagerSize) : this.pagerStart / this.options.pagerSize + this.options.pagerSize);
     if (this.pagerStart > 0) {
       ich.pagerItem({
-        num: "&laquo;",
+        num: "Prev",
         rel: this.pagerStart - this.options.pagerSize
       }).appendTo($pager);
     }
-    for (i = _i = min, _ref = this.options.pagerSize; _ref > 0 ? _i <= max : _i >= max; i = _i += _ref) {
+    for (i = _i = min; min <= max ? _i <= max : _i >= max; i = min <= max ? ++_i : --_i) {
       $item = ich.pagerItem({
-        num: i / this.options.pagerSize + 1,
-        rel: i,
-        "class": this.pagerStart === i ? "active" : ""
+        num: i + 1,
+        rel: i * this.options.pagerSize,
+        active: ($pagerStart = i * this.options.pagerSize) ? "active" : ""
       });
       $item.appendTo($pager);
     }
-    if (this.pagerStart + this.options.pagerSize < data.length) {
+    if (this.pagerStart + this.options.pagerSize >= data.length) {
       ich.pagerItem({
-        num: "&raquo;",
+        num: "Next",
         rel: this.pagerStart + this.options.pagerSize
       }).appendTo($pager);
     }
     $text.find('a').bind("click", function() {
-      that.drawMarkers(data, parseInt($(this).attr("rel")));
-      that.scroll($(that.options.resultsSelector), 0);
+      this.pagerStart = parseInt($(this).attr("rel"));
+      this.drawMarkers(data);
       return false;
     });
     return $text;
   };
   this.markerBounds = function(bounds, factor) {
-    var lat, lng;
-    factor = factor != null ? factor - 1 : 1;
-    factor = 0;
+    var lat, lng, _ref;
+    factor = (_ref = factor != null) != null ? _ref : factor - {
+      1: 1
+    };
     lat = Math.abs(bounds._southWest.lat - bounds._northEast.lat) * factor;
     lng = Math.abs(bounds._southWest.lng - bounds._northEast.lng) * factor;
     return {
@@ -314,5 +255,5 @@ Map = function(options) {
 };
 
 /*
-//@ sourceMappingURL=map.js.map
+//@ sourceMappingURL=map1.js.map
 */
