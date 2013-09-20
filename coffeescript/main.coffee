@@ -40,7 +40,9 @@ window.onload = ->
       locache.set "blueGuideData", data
       query = new JsonQuery "body", data
     
-  alert $(window).height() + ',' + $(window).width()
+  #alert $(window).height() + ',' + $(window).width()
+  
+
   params = 
     id: "map"
     updateSelector: "body"

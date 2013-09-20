@@ -47,7 +47,6 @@ window.onload = function() {
       return query = new JsonQuery("body", data);
     });
   }
-  alert($(window).height() + ',' + $(window).width());
   params = {
     id: "map",
     updateSelector: "body",
