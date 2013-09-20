@@ -138,10 +138,10 @@
   .left-sidebar-active:not(.loading)
 
     .left-sidebar
-      top: 70%
+      top: 80%
 
     .main-content
-      height: 70%
+      height: 80%
 
 
 
@@ -161,7 +161,6 @@
       height: auto
 
     #map
-      //display: none
       position: static !important
 
       .leaflet-map-pane
@@ -210,6 +209,17 @@
     .left-sidebar
       display: none
 
+  .leaflet-top.leaflet-left
+    div.leaflet-control-geosearch,
+    #geocode
+      display: none
+
+  .locate-active,
+  .overlay-active
+    .leaflet-top.leaflet-left
+      div.leaflet-control-geosearch,
+      #geocode
+        display: block
 
 
 
@@ -220,4 +230,4 @@
 @media only screen and (device-width:320px) and (device-height:480px) 
   .left-sidebar-active .left-sidebar
     top: 0 !important
-    margin-top: 250px
+    margin-top: 280px
