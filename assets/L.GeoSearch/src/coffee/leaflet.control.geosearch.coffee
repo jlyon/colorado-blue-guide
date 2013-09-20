@@ -25,6 +25,7 @@ class L.Control.GeoSearch extends L.Control
     autocompleteMinQueryLen: 3
     autocompleteQueryDelay_ms: 800
     maxResultCount: 10
+    open: false
 
   constructor: (options) ->
     L.Util.extend @options, options
@@ -45,6 +46,7 @@ class L.Control.GeoSearch extends L.Control
     @_changeIcon "glass"
 
     # create the form that will contain the input
+    if @options.open then formClass = "displayNone" else formClass = ""
     form = L.DomUtil.create("form", "displayNone", @_container)
     form.setAttribute( "autocomplete", "off" );
 
@@ -56,9 +58,10 @@ class L.Control.GeoSearch extends L.Control
     @_searchInput = input
 
     #add events form the link(_btnSearch)
+    if @options.open then clickElement = @_container else clickElement = @_btnSearch
     L.DomEvent
-      .on(@_btnSearch, "click", L.DomEvent.stop)
-      .on @_btnSearch, "click", =>
+      .on(clickElement, "click", L.DomEvent.stop)
+      .on clickElement, "click", =>
         if L.DomUtil.hasClass(form, "displayNone")
           L.DomUtil.removeClass form, "displayNone" # unhide form
           $(input).select()
@@ -74,7 +77,6 @@ class L.Control.GeoSearch extends L.Control
       .on(input, "input", @_onInput, this)
 
     if L.Browser.touch
-      alert('asdf')
       L.DomEvent.on @_container, "click", L.DomEvent.stop
     else
       L.DomEvent.disableClickPropagation @_container
@@ -231,7 +233,7 @@ class L.Control.GeoSearch extends L.Control
     if @options.enableAutocomplete
       @_hideAutocomplete
     form = @_container.querySelector("form")
-    L.DomUtil.addClass form, "displayNone" unless L.DomUtil.hasClass(form, "displayNone") # hide form
+    L.DomUtil.addClass form, "displayNone" unless L.DomUtil.hasClass(form, "displayNone") or @options.open # hide form
     L.DomUtil.addClass @_message, "displayNone" unless L.DomUtil.hasClass(@_message, "displayNone") # hide form
     @_suggestionBox.innerHTML = ""
 

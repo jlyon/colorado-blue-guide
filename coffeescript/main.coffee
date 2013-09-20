@@ -40,7 +40,7 @@ window.onload = ->
       locache.set "blueGuideData", data
       query = new JsonQuery "body", data
     
-
+  alert $(window).height() + ',' + $(window).width()
   params = 
     id: "map"
     updateSelector: "body"
@@ -56,6 +56,7 @@ window.onload = ->
         searchLabel: "Search for address..."
         zoomLevel: 13 
         showMarker: false
+        open: true
     locate: {html: ich.locateBtn()}   
     layerUrl: "http://a.tiles.mapbox.com/v3/albatrossdigital.map-i5m0mag7/{z}/{x}/{y}.png"
     fields: filters.displayFields

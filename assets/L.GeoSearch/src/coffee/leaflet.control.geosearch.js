@@ -29,7 +29,8 @@ L.Control.GeoSearch = (function(_super) {
     enableAutocomplete: true,
     autocompleteMinQueryLen: 3,
     autocompleteQueryDelay_ms: 800,
-    maxResultCount: 10
+    maxResultCount: 10,
+    open: false
   };
 
   function GeoSearch(options) {
@@ -45,13 +46,18 @@ L.Control.GeoSearch = (function(_super) {
   }
 
   GeoSearch.prototype.onAdd = function(map) {
-    var form, input,
+    var clickElement, form, formClass, input,
       _this = this;
     this._container = L.DomUtil.create("div", "leaflet-bar leaflet-control leaflet-control-geosearch");
     this._btnSearch = L.DomUtil.create("a", "", this._container);
     this._btnSearch.href = "#";
     this._btnSearch.title = this.options.searchLabel;
     this._changeIcon("glass");
+    if (this.options.open) {
+      formClass = "displayNone";
+    } else {
+      formClass = "";
+    }
     form = L.DomUtil.create("form", "displayNone", this._container);
     form.setAttribute("autocomplete", "off");
     input = L.DomUtil.create("input", null, form);
@@ -59,7 +65,12 @@ L.Control.GeoSearch = (function(_super) {
     input.setAttribute("id", "inputGeosearch");
     input.setAttribute("autocomplete", "off");
     this._searchInput = input;
-    L.DomEvent.on(this._btnSearch, "click", L.DomEvent.stop).on(this._btnSearch, "click", function() {
+    if (this.options.open) {
+      clickElement = this._container;
+    } else {
+      clickElement = this._btnSearch;
+    }
+    L.DomEvent.on(clickElement, "click", L.DomEvent.stop).on(clickElement, "click", function() {
       if (L.DomUtil.hasClass(form, "displayNone")) {
         L.DomUtil.removeClass(form, "displayNone");
         $(input).select();
@@ -71,7 +82,6 @@ L.Control.GeoSearch = (function(_super) {
     });
     L.DomEvent.on(input, "keyup", this._onKeyUp, this).on(input, "keypress", this._onKeyPress, this).on(input, "input", this._onInput, this);
     if (L.Browser.touch) {
-      alert('asdf');
       L.DomEvent.on(this._container, "click", L.DomEvent.stop);
     } else {
       L.DomEvent.disableClickPropagation(this._container);
@@ -246,7 +256,7 @@ L.Control.GeoSearch = (function(_super) {
       this._hideAutocomplete;
     }
     form = this._container.querySelector("form");
-    if (!L.DomUtil.hasClass(form, "displayNone")) {
+    if (!(L.DomUtil.hasClass(form, "displayNone") || this.options.open)) {
       L.DomUtil.addClass(form, "displayNone");
     }
     if (!L.DomUtil.hasClass(this._message, "displayNone")) {

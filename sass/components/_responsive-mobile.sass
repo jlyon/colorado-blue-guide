@@ -227,7 +227,14 @@
 
 // I was really having issues with the padding on iOS
 // This is a bit of a hack, but it's the only thing that would work
-@media only screen and (device-width:320px) and (device-height:480px) 
-  .left-sidebar-active .left-sidebar
-    top: 0 !important
-    margin-top: 280px
+@media only screen and (device-width:320px)
+
+  @media (device-height:480px)
+    .left-sidebar-active .left-sidebar
+      top: 0 !important
+      margin-top: 280px
+
+  @media (device-height:568px)
+    .left-sidebar-active .left-sidebar
+      top: 0 !important
+      margin-top: 340px

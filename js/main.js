@@ -46,6 +46,7 @@ window.onload = function() {
       return query = new JsonQuery("body", data);
     });
   }
+  alert($(window).height() + ',' + $(window).width());
   params = {
     id: "map",
     updateSelector: "body",
@@ -60,7 +61,8 @@ window.onload = function() {
       settings: {
         searchLabel: "Search for address...",
         zoomLevel: 13,
-        showMarker: false
+        showMarker: false,
+        open: true
       }
     },
     locate: {
