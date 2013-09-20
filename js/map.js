@@ -45,7 +45,8 @@ Map = function(options) {
         maxZoom: this.options.maxZoom
       });
       $(this.options.locate.html).bind("click", function(e) {
-        return that.map.locate(settings);
+        that.map.locate(settings);
+        return L.DomEvent.preventDefault(e);
       }).appendTo("#map .leaflet-top.leaflet-left");
     }
   };

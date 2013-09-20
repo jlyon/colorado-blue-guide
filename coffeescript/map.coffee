@@ -51,6 +51,7 @@ Map = (options) ->
       )
       $(@options.locate.html).bind "click", (e) ->
         that.map.locate settings
+        L.DomEvent.preventDefault e
       .appendTo "#map .leaflet-top.leaflet-left"
 
     return
