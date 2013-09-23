@@ -185,6 +185,7 @@ Map = (options) ->
           that.closeItem($(this).parents(".item"))
 
         $resultItem.find(".btn-directions").bind "click touchstart", ->
+          alert window.os
           if window.os is "android"
             navigator.app.loadUrl "http://maps.google.com/maps?daddr=" + item["Latitude"] + "," + item["Longitude"], { openExternal: true }
             #window.location = 'gps:' + item["Latitude"] + "," + item["Longitude"]
