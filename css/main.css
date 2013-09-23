@@ -264,27 +264,28 @@
 /* line 47, ../sass/components/_map.sass */
 .leaflet-top.leaflet-left div.leaflet-control-geosearch a.leaflet-bar-part {
   top: 6px;
+  background-color: transparent;
 }
-/* line 51, ../sass/components/_map.sass */
+/* line 52, ../sass/components/_map.sass */
 .leaflet-top.leaflet-left div.leaflet-control-geosearch #leaflet-control-geosearch-submit i {
   margin: 0;
 }
-/* line 54, ../sass/components/_map.sass */
+/* line 55, ../sass/components/_map.sass */
 .leaflet-top.leaflet-left .leaflet-control-locate {
   clear: none;
 }
-/* line 57, ../sass/components/_map.sass */
+/* line 58, ../sass/components/_map.sass */
 .leaflet-top.leaflet-left .leaflet-control-zoom {
   position: absolute;
   left: -45px;
 }
 
-/* line 62, ../sass/components/_map.sass */
+/* line 63, ../sass/components/_map.sass */
 .leaflet-container {
   font-family: "open-sans", sans-serif;
   font-size: 14px;
 }
-/* line 66, ../sass/components/_map.sass */
+/* line 67, ../sass/components/_map.sass */
 .leaflet-container .leaflet-popup-content-wrapper {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -292,11 +293,11 @@
   -o-border-radius: 0;
   border-radius: 0;
 }
-/* line 70, ../sass/components/_map.sass */
+/* line 71, ../sass/components/_map.sass */
 .leaflet-container .leaflet-popup-content-wrapper .fields .title {
   width: 4.5em;
 }
-/* line 73, ../sass/components/_map.sass */
+/* line 74, ../sass/components/_map.sass */
 .leaflet-container .leaflet-popup-content-wrapper .fields .value {
   margin-left: 5.5em;
 }
@@ -826,12 +827,22 @@
     top: 0 !important;
     margin-top: 280px;
   }
+
+  /* line 237, ../sass/components/_responsive-mobile.sass */
+  .leaflet-top.leaflet-left div.leaflet-control-geosearch form input {
+    margin-top: 0;
+  }
 }
 @media only screen and (device-width: 320px) and (device-height: 568px) {
-  /* line 238, ../sass/components/_responsive-mobile.sass */
+  /* line 241, ../sass/components/_responsive-mobile.sass */
   .left-sidebar-active .left-sidebar {
     top: 0 !important;
     margin-top: 340px;
+  }
+
+  /* line 245, ../sass/components/_responsive-mobile.sass */
+  .leaflet-top.leaflet-left div.leaflet-control-geosearch form input {
+    margin-top: 0;
   }
 }
 /* line 1, ../sass/components/_results.sass */

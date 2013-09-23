@@ -149,6 +149,17 @@ Map = function(options) {
         item.letter = marker.options.icon.num2letter(index);
         item.distance = Math.round(item.distance * 10) / 10;
         $resultItem = ich.listItem(item);
+        if (window.responsive === "mobile") {
+          $resultItem.find(".static-marker").bind("click", function(e) {
+            var $item;
+            $item = $(this).parents(".item");
+            if ($item.hasClass('active')) {
+              return $item.removeClass("active");
+            } else {
+              return that.scroll("body", 0);
+            }
+          });
+        }
         $resultItem.find(".static-marker, h3 a").bind("click", function(e) {
           var $item;
           $item = $(this).parents(".item");
@@ -157,9 +168,7 @@ Map = function(options) {
           } else {
             marker = that.markerLayer._layers[$item.attr("rel")];
             that.map.panTo(marker._latlng);
-            if (window.responsive === "mobile") {
-              $item.parent().find('.item.active').removeClass("active");
-            } else {
+            if (window.responsive !== "mobile") {
               marker.openPopup();
             }
             $item.addClass("active");
@@ -167,10 +176,12 @@ Map = function(options) {
           return false;
         });
         $resultItem.find(".close").bind("click", function() {
-          return that.closeItem($(this).parents(".item"));
+          that.closeItem($(this).parents(".item"));
+          if (window.responsive === "mobile") {
+            return that.scroll("body", 0);
+          }
         });
         $resultItem.find(".btn-directions").bind("click touchstart", function() {
-          alert(window.os);
           if (window.os === "android") {
             return navigator.app.loadUrl("http://maps.google.com/maps?daddr=" + item["Latitude"] + "," + item["Longitude"], {
               openExternal: true

@@ -166,6 +166,14 @@ Map = (options) ->
         item.distance = Math.round(item.distance * 10) / 10
         $resultItem = ich.listItem(item)
 
+        if window.responsive is "mobile"
+          $resultItem.find(".static-marker").bind "click", (e) ->
+            $item = $(this).parents(".item")
+            if $item.hasClass('active')
+              $item.removeClass "active"
+            else
+              that.scroll "body", 0
+
         $resultItem.find(".static-marker, h3 a").bind "click", (e) ->
           $item = $(this).parents(".item")
           if $item.hasClass "active"
@@ -174,18 +182,16 @@ Map = (options) ->
             marker = that.markerLayer._layers[$item.attr("rel")]
             #marker.zIndexOffset 1000
             that.map.panTo(marker._latlng)
-            if window.responsive is "mobile"
-              $item.parent().find('.item.active').removeClass "active"
-            else
+            if window.responsive isnt "mobile"
               marker.openPopup()
             $item.addClass "active"
           false
 
         $resultItem.find(".close").bind "click", ->
           that.closeItem($(this).parents(".item"))
+          that.scroll "body", 0 if window.responsive is "mobile"
 
         $resultItem.find(".btn-directions").bind "click touchstart", ->
-          alert window.os
           if window.os is "android"
             navigator.app.loadUrl "http://maps.google.com/maps?daddr=" + item["Latitude"] + "," + item["Longitude"], { openExternal: true }
             #window.location = 'gps:' + item["Latitude"] + "," + item["Longitude"]
