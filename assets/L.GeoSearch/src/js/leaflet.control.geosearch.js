@@ -76,7 +76,7 @@ L.Control.GeoSearch = (function(_super) {
         if (!L.Browser.touch) {
           $(input).focus();
         } else {
-          $(input).blur();
+          $(input).focus();
         }
         return $(input).trigger("click");
       } else {
@@ -379,12 +379,10 @@ L.Control.GeoSearch = (function(_super) {
 
   GeoSearch.prototype._onKeyPress = function(e) {
     var enterKey, escapeKey;
-    alert('keypress');
     enterKey = 13;
     escapeKey = 27;
     switch (e.keyCode) {
       case enterKey:
-        alert('enter');
         L.DomEvent.preventDefault(e);
         this._startSearch();
         return false;
