@@ -5,7 +5,7 @@
 }
 /* line 7, ../sass/components/_filters.sass */
 #filters .accordion-heading {
-  font-family: adelle, Helvetica, "Droid Sans", serif;
+  font-family: adelle, Baskerville, "Droid Serif", serif;
   font-weight: bold;
   background-color: #eef5fb;
   margin: 5px;
@@ -196,7 +196,7 @@
 }
 /* line 19, ../sass/components/_header.sass */
 .navbar .links .nav a {
-  font-family: adelle, Helvetica, "Droid Sans", serif;
+  font-family: adelle, Baskerville, "Droid Serif", serif;
   font-weight: bold;
   color: white !important;
   text-shadow: none;
@@ -940,7 +940,7 @@ textarea {
 h1,
 h2,
 h3 {
-  font-family: adelle, Helvetica, "Droid Sans", serif;
+  font-family: adelle, Baskerville, "Droid Serif", serif;
   font-weight: bold;
   font-size: 18px;
   line-height: 1.2em;
