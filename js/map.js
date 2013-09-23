@@ -170,6 +170,7 @@ Map = function(options) {
           return that.closeItem($(this).parents(".item"));
         });
         $resultItem.find(".btn-directions").bind("click touchstart", function() {
+          alert(window.os);
           if (window.os === "android") {
             return navigator.app.loadUrl("http://maps.google.com/maps?daddr=" + item["Latitude"] + "," + item["Longitude"], {
               openExternal: true
