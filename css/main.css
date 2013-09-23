@@ -5,7 +5,7 @@
 }
 /* line 7, ../sass/components/_filters.sass */
 #filters .accordion-heading {
-  font-family: adelle, serif;
+  font-family: adelle, Helvetica, "Droid Sans", serif;
   font-weight: bold;
   background-color: #eef5fb;
   margin: 5px;
@@ -196,7 +196,7 @@
 }
 /* line 19, ../sass/components/_header.sass */
 .navbar .links .nav a {
-  font-family: adelle, serif;
+  font-family: adelle, Helvetica, "Droid Sans", serif;
   font-weight: bold;
   color: white !important;
   text-shadow: none;
@@ -282,7 +282,7 @@
 
 /* line 63, ../sass/components/_map.sass */
 .leaflet-container {
-  font-family: "open-sans", sans-serif;
+  font-family: "open-sans", Helvetica, "Droid Sans", sans-serif;
   font-size: 14px;
 }
 /* line 67, ../sass/components/_map.sass */
@@ -877,7 +877,7 @@
 /* line 26, ../sass/components/_results.sass */
 #results .item h3 span {
   color: #cccccc;
-  font-family: "open-sans", sans-serif;
+  font-family: "open-sans", Helvetica, "Droid Sans", sans-serif;
   font-size: 0.8em;
 }
 /* line 31, ../sass/components/_results.sass */
@@ -933,14 +933,14 @@ input,
 button,
 select,
 textarea {
-  font-family: "open-sans", sans-serif;
+  font-family: "open-sans", Helvetica, "Droid Sans", sans-serif;
 }
 
 /* line 9, ../sass/components/_style.sass */
 h1,
 h2,
 h3 {
-  font-family: adelle, serif;
+  font-family: adelle, Helvetica, "Droid Sans", serif;
   font-weight: bold;
   font-size: 18px;
   line-height: 1.2em;
