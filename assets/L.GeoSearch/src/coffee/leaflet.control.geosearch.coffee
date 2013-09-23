@@ -47,8 +47,8 @@ class L.Control.GeoSearch extends L.Control
     @_changeIcon "glass"
 
     # create the form that will contain the input
-    if @options.open then formClass = "displayNone" else formClass = ""
-    form = L.DomUtil.create("form", "displayNone", @_container)
+    if !@options.open then formClass = "displayNone" else formClass = ""
+    form = L.DomUtil.create("form", formClass, @_container)
     form.setAttribute( "autocomplete", "off" );
 
     # create the input, and set its placeholder ("Enter address") text
@@ -63,9 +63,9 @@ class L.Control.GeoSearch extends L.Control
     L.DomEvent
       .on(clickElement, "click", L.DomEvent.stop)
       .on clickElement, "click", =>
-        if L.DomUtil.hasClass(form, "displayNone")
+        if L.DomUtil.hasClass(form, "displayNone") or @options.open
           L.DomUtil.removeClass form, "displayNone" # unhide form
-          $(input).select()
+          if @options.clearValue then $(input).select()
           $(input).focus()
           $(input).trigger "click"
         else
@@ -189,7 +189,7 @@ class L.Control.GeoSearch extends L.Control
   _cancelSearch: ->
     #clear the input value of the search
     input = @_container.querySelector("input")
-    input.value = "" # clear form
+    if @options.clearValue then input.value = "" # clear form
 
     # show glass icon
     @_changeIcon "glass"

@@ -50,12 +50,12 @@ L.Control.GeoSearch = (function(_super) {
     this._btnSearch.href = "#";
     this._btnSearch.title = this.options.searchLabel;
     this._changeIcon("glass");
-    if (this.options.open) {
+    if (!this.options.open) {
       formClass = "displayNone";
     } else {
       formClass = "";
     }
-    form = L.DomUtil.create("form", "displayNone", this._container);
+    form = L.DomUtil.create("form", formClass, this._container);
     form.setAttribute("autocomplete", "off");
     input = L.DomUtil.create("input", null, form);
     input.placeholder = this.options.searchLabel;
@@ -68,9 +68,11 @@ L.Control.GeoSearch = (function(_super) {
       clickElement = this._btnSearch;
     }
     L.DomEvent.on(clickElement, "click", L.DomEvent.stop).on(clickElement, "click", function() {
-      if (L.DomUtil.hasClass(form, "displayNone")) {
+      if (L.DomUtil.hasClass(form, "displayNone") || _this.options.open) {
         L.DomUtil.removeClass(form, "displayNone");
-        $(input).select();
+        if (_this.options.clearValue) {
+          $(input).select();
+        }
         $(input).focus();
         return $(input).trigger("click");
       } else {
@@ -209,7 +211,9 @@ L.Control.GeoSearch = (function(_super) {
   GeoSearch.prototype._cancelSearch = function() {
     var input;
     input = this._container.querySelector("input");
-    input.value = "";
+    if (this.options.clearValue) {
+      input.value = "";
+    }
     this._changeIcon("glass");
     return this._hide();
   };
