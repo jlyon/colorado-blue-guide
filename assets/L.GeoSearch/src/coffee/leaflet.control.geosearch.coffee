@@ -202,7 +202,6 @@ class L.Control.GeoSearch extends L.Control
     @_changeIcon "spinner"
     input = @_container.querySelector("input")
     location = @options.provider.GetLocations input.value, @_showLocation
-    console.log 'start search'
     @_hide()
 
   _recordLastUserInput: (str) ->
@@ -324,14 +323,13 @@ class L.Control.GeoSearch extends L.Control
         @_hideAutocomplete()
 
   _onKeyPress: (e) ->
-    alert 'keypress'
     enterKey = 13
     escapeKey = 27
     switch e.keyCode
       when enterKey
-        alert 'enter'
         L.DomEvent.preventDefault e
         @_startSearch()
+        return false
 
   _onKeyUp: (e) ->
     upArrow = 38
