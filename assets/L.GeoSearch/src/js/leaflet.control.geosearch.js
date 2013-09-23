@@ -375,10 +375,12 @@ L.Control.GeoSearch = (function(_super) {
 
   GeoSearch.prototype._onKeyPress = function(e) {
     var enterKey, escapeKey;
+    alert('keypress');
     enterKey = 13;
     escapeKey = 27;
     switch (e.keyCode) {
       case enterKey:
+        alert('enter');
         L.DomEvent.preventDefault(e);
         return this._startSearch();
     }

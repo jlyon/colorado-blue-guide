@@ -323,10 +323,12 @@ class L.Control.GeoSearch extends L.Control
         @_hideAutocomplete()
 
   _onKeyPress: (e) ->
+    alert 'keypress'
     enterKey = 13
     escapeKey = 27
     switch e.keyCode
       when enterKey
+        alert 'enter'
         L.DomEvent.preventDefault e
         @_startSearch()
 
