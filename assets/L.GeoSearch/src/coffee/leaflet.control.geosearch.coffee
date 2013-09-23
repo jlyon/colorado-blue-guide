@@ -66,7 +66,10 @@ class L.Control.GeoSearch extends L.Control
         if L.DomUtil.hasClass(form, "displayNone") or @options.open
           L.DomUtil.removeClass form, "displayNone" # unhide form
           $(input).select() if @options.clearValue
-          $(input).focus() if !L.Browser.touch
+          if !L.Browser.touch
+            $(input).focus()
+          else
+            $(input).blur()
           $(input).trigger "click"
         else
           if not @options.open then @_hide()
@@ -323,10 +326,12 @@ class L.Control.GeoSearch extends L.Control
         @_hideAutocomplete()
 
   _onKeyPress: (e) ->
+    alert 'keypress'
     enterKey = 13
     escapeKey = 27
     switch e.keyCode
       when enterKey
+        alert 'enter'
         L.DomEvent.preventDefault e
         @_startSearch()
         return false
