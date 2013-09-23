@@ -68,8 +68,8 @@ class L.Control.GeoSearch extends L.Control
           $(input).select() if @options.clearValue
           if !L.Browser.touch
             $(input).focus()
-          else
-            $(input).blur()
+          #else
+            #$(input).blur()
           $(input).trigger "click"
         else
           if not @options.open then @_hide()
