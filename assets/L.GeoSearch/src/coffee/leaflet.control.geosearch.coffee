@@ -65,8 +65,8 @@ class L.Control.GeoSearch extends L.Control
       .on clickElement, "click", =>
         if L.DomUtil.hasClass(form, "displayNone") or @options.open
           L.DomUtil.removeClass form, "displayNone" # unhide form
-          if @options.clearValue then $(input).select()
-          $(input).focus()
+          $(input).select() if @options.clearValue
+          $(input).focus() if !L.Browser.touch
           $(input).trigger "click"
         else
           if not @options.open then @_hide()
@@ -202,6 +202,7 @@ class L.Control.GeoSearch extends L.Control
     @_changeIcon "spinner"
     input = @_container.querySelector("input")
     location = @options.provider.GetLocations input.value, @_showLocation
+    console.log 'start search'
     @_hide()
 
   _recordLastUserInput: (str) ->
