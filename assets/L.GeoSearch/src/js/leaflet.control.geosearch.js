@@ -28,7 +28,8 @@ L.Control.GeoSearch = (function(_super) {
     autocompleteMinQueryLen: 3,
     autocompleteQueryDelay_ms: 800,
     maxResultCount: 10,
-    open: false
+    open: false,
+    clearValue: true
   };
 
   function GeoSearch(options) {
@@ -346,7 +347,9 @@ L.Control.GeoSearch = (function(_super) {
   };
 
   GeoSearch.prototype._clearUserSearchInput = function() {
-    this._searchInput.value = "";
+    if (this.options.clearValue) {
+      this._searchInput.value = "";
+    }
     return this._hideAutocomplete();
   };
 

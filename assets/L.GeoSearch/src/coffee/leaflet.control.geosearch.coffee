@@ -26,6 +26,7 @@ class L.Control.GeoSearch extends L.Control
     autocompleteQueryDelay_ms: 800
     maxResultCount: 10
     open: false
+    clearValue: true
 
   constructor: (options) ->
     L.Util.extend @options, options
@@ -306,7 +307,7 @@ class L.Control.GeoSearch extends L.Control
       @_isShowingError = false
 
   _clearUserSearchInput: ->
-    @_searchInput.value = ""
+    if @options.clearValue then @_searchInput.value = ""
     @_hideAutocomplete()
 
   _onChange: ->
