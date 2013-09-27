@@ -29,7 +29,7 @@ Map = (options) ->
       #layers: new L.TileLayer @options.layerUrl
     )
     @retina = window.devicePixelRatio >= 2
-    if (retina and @options.retinaLayerUrl?)
+    if (@retina and @options.retinaLayerUrl?)
       # Retina tiles are sized 1/2 of normal tiles for twice the pixel density
       @map.tileSize = { x: 128, y: 128 }
       @map.addLayer new L.TileLayer @options.layerUrl

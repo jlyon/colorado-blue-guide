@@ -26,7 +26,7 @@ Map = function(options) {
       attributionControl: false
     });
     this.retina = window.devicePixelRatio >= 2;
-    if (retina && (this.options.retinaLayerUrl != null)) {
+    if (this.retina && (this.options.retinaLayerUrl != null)) {
       this.map.tileSize = {
         x: 128,
         y: 128
