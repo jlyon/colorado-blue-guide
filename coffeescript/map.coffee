@@ -28,6 +28,8 @@ Map = (options) ->
       attributionControl: false
       #layers: new L.TileLayer @options.layerUrl
     )
+
+    # Add the tile layer (and add retina support)
     @retina = window.devicePixelRatio >= 2
     if (@retina and @options.retinaLayerUrl?)
       # Retina tiles are sized 1/2 of normal tiles for twice the pixel density
