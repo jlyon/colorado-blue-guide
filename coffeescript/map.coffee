@@ -34,9 +34,9 @@ Map = (options) ->
     if (@retina and @options.retinaLayerUrl?)
       # Retina tiles are sized 1/2 of normal tiles for twice the pixel density
       @map.tileSize = { x: 128, y: 128 }
-      @map.addLayer new L.TileLayer @options.layerUrl
-    else
       @map.addLayer new L.TileLayer @options.retinaLayerUrl
+    else
+      @map.addLayer new L.TileLayer @options.layerUrl
 
     @markerLayer.addTo @map
     @homeMarkerLayer.addTo @map

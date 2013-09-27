@@ -31,9 +31,9 @@ Map = function(options) {
         x: 128,
         y: 128
       };
-      this.map.addLayer(new L.TileLayer(this.options.layerUrl));
-    } else {
       this.map.addLayer(new L.TileLayer(this.options.retinaLayerUrl));
+    } else {
+      this.map.addLayer(new L.TileLayer(this.options.layerUrl));
     }
     this.markerLayer.addTo(this.map);
     this.homeMarkerLayer.addTo(this.map);
