@@ -36,7 +36,7 @@ Map = (options) ->
       @map.tileSize = { x: 128, y: 128 }
       @map.addLayer new L.TileLayer @options.layerUrl
     else
-      map.addLayer new L.TileLayer @options.retinaLayerUrl
+      @map.addLayer new L.TileLayer @options.retinaLayerUrl
 
     @markerLayer.addTo @map
     @homeMarkerLayer.addTo @map

@@ -34,7 +34,7 @@ Map = function(options) {
       };
       this.map.addLayer(new L.TileLayer(this.options.layerUrl));
     } else {
-      map.addLayer(new L.TileLayer(this.options.retinaLayerUrl));
+      this.map.addLayer(new L.TileLayer(this.options.retinaLayerUrl));
     }
     this.markerLayer.addTo(this.map);
     this.homeMarkerLayer.addTo(this.map);
