@@ -97,7 +97,7 @@ Filters = ->
     title: "Access Assistance"
     color: "red"
     icon: "icon-mentalbehavioural"
-    services: ["Medicaid Enrollment", "Connect for Health Colorado Enrollment Assistance"]
+    services: ["Medicaid Enrollment Assistance", "Connect for Health Colorado Enrollment Assistance"]
   ,
     title: "Oral / Dental"
     color: "blue"
@@ -125,7 +125,7 @@ Filters = ->
       type: "select"
       msg: "Select services"
       startCol: "BB"
-      options: ["Primary Health Care", "Dental Care", "Vision Care", "Mental/Behavioral Health Care", "Women's Health", "Children's Health", "Adolescent Care", "Adult Day Services", "Respite Care", "Substance Abuse Treatment", "Case Management", "Chronic Disease Mgmt", "HIV/AIDS Treatment & Care", "STI Testing, Treatment, & Prevention", "Health Care for Military Veterans", "Health Care for Disabilities or Special Needs", "LGBT Health Services", "Immunizations", "Medicaid Enrollment", "Connect for Health Colorado Enrollment Assistance", "Other"]
+      options: ["Primary Health Care", "Dental Care", "Vision Care", "Mental/Behavioral Health Care", "Women's Health", "Children's Health", "Adolescent Care", "Adult Day Services", "Respite Care", "Substance Abuse Treatment", "Case Management", "Chronic Disease Mgmt", "HIV/AIDS Treatment & Care", "STI Testing, Treatment, & Prevention", "Health Care for Military Veterans", "Health Care for Disabilities or Special Needs", "LGBT Health Services", "Immunizations", "Medicaid Enrollment Assistance", "Connect for Health Colorado Enrollment Assistance", "Other"]
 
     "Age Groups Served":
       type: "select"
