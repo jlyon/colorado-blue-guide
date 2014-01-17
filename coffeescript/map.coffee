@@ -202,13 +202,14 @@ Map = (options) ->
           that.scroll "body", 0 if window.responsive is "mobile"
 
         $resultItem.find(".btn-directions").bind "click touchstart", ->
+          latlng = $(this).attr 'rel'
           if window.os is "android"
-            navigator.app.loadUrl "http://maps.google.com/maps?daddr=" + item["Latitude"] + "," + item["Longitude"], { openExternal: true }
+            navigator.app.loadUrl "http://maps.google.com/maps?daddr=" + latlng, { openExternal: true }
             #window.location = 'gps:' + item["Latitude"] + "," + item["Longitude"]
           else if window.os is "ios"
-            window.location = 'maps:' + item["Latitude"] + "," + item["Longitude"]
+            window.location = 'maps:' + latlng
           else
-            window.open "http://maps.google.com/maps?daddr=" + item["Latitude"] + "," + item["Longitude"]
+            window.open "http://maps.google.com/maps?daddr=" + latlng
 
         if window.os is "android" or window.os is "ios"
           $resultItem.find(".website").bind "click", ->

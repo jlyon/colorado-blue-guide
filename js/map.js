@@ -191,14 +191,16 @@ Map = function(options) {
           }
         });
         $resultItem.find(".btn-directions").bind("click touchstart", function() {
+          var latlng;
+          latlng = $(this).attr('rel');
           if (window.os === "android") {
-            return navigator.app.loadUrl("http://maps.google.com/maps?daddr=" + item["Latitude"] + "," + item["Longitude"], {
+            return navigator.app.loadUrl("http://maps.google.com/maps?daddr=" + latlng, {
               openExternal: true
             });
           } else if (window.os === "ios") {
-            return window.location = 'maps:' + item["Latitude"] + "," + item["Longitude"];
+            return window.location = 'maps:' + latlng;
           } else {
-            return window.open("http://maps.google.com/maps?daddr=" + item["Latitude"] + "," + item["Longitude"]);
+            return window.open("http://maps.google.com/maps?daddr=" + latlng);
           }
         });
         if (window.os === "android" || window.os === "ios") {
