@@ -24,6 +24,7 @@ L.GeoSearch.Provider.Google = L.Class.extend({
 
 	GetLocations: function(qry, callback) {
 		var geocoder = L.GeoSearch.Provider.Google.Geocoder;
+		qry += ' CO, USA'
 
 		var parameters = L.Util.extend({
 			address: qry
