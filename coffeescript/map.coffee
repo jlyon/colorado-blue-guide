@@ -230,6 +230,7 @@ Map = (options) ->
       parent = "body"
       top = if element is 0 then 0 else $(element).offset().top - 75
     else
+      parent = ".left-sidebar"
       top = if element is 0 then 0 else $(parent).scrollTop() + $(element).offset().top - $(parent).offset().top
     $(parent).animate({ scrollTop: top }, { duration: 'slow', easing: 'swing'})
 

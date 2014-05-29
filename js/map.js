@@ -228,6 +228,7 @@ Map = function(options) {
       parent = "body";
       top = element === 0 ? 0 : $(element).offset().top - 75;
     } else {
+      parent = ".left-sidebar";
       top = element === 0 ? 0 : $(parent).scrollTop() + $(element).offset().top - $(parent).offset().top;
     }
     return $(parent).animate({
