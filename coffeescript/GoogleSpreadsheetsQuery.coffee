@@ -51,11 +51,13 @@ GoogleSpreadsheetsQuery = (filters, callback) ->
     if response.table?
       
       # Update/set the values
+      console.log response.table.rows
       _.each response.table.rows, (cols) ->
         row = active: false
         arrRow = []
         _.each cols.c, (item, index) ->
           col = that.colId2Int(response.table.cols[index].id)
+          item = { v: '' } if item == null
           if col < startCol
             row[response.table.cols[index].label.replace(/Clinic Information |Service Access |Address and Contact Information |Appointment Requirements |SEP Requirements |Safety-Net Type |Services Provided |Age Groups Served |Works With |Languages Spoken |Payment Assistance & Special Accommodations /g, "")] = item.v
           

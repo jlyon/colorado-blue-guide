@@ -1,6 +1,6 @@
 query = undefined
 tab = undefined
-rev = 0.16
+rev = 0.18
 activeTab = undefined
 window.onload = ->
 
@@ -39,7 +39,7 @@ window.onload = ->
     jQuery.getJSON "json/data.json?rev="+rev, {}, (data) ->
       locache.set "blueGuideData", data
       query = new JsonQuery "body", data
-  
+    
   # Manually set the map height with JS (couldn't make this work with CSS)
   if window.responsive isnt "mobile" then $('.row-fluid>div').height $(window).height() - $('.navbar').height()
 

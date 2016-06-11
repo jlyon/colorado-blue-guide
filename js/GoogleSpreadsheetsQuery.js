@@ -58,6 +58,7 @@ GoogleSpreadsheetsQuery = function(filters, callback) {
     data = (data ? data : []);
     fields = void 0;
     if (response.table != null) {
+      console.log(response.table.rows);
       _.each(response.table.rows, function(cols) {
         var arrRow, row;
         row = {
@@ -67,6 +68,11 @@ GoogleSpreadsheetsQuery = function(filters, callback) {
         _.each(cols.c, function(item, index) {
           var col, previous, value;
           col = that.colId2Int(response.table.cols[index].id);
+          if (item === null) {
+            item = {
+              v: ''
+            };
+          }
           if (col < startCol) {
             return row[response.table.cols[index].label.replace(/Clinic Information |Service Access |Address and Contact Information |Appointment Requirements |SEP Requirements |Safety-Net Type |Services Provided |Age Groups Served |Works With |Languages Spoken |Payment Assistance & Special Accommodations /g, "")] = item.v;
           } else if (item.v !== "") {
