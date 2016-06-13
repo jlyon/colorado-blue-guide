@@ -7,7 +7,7 @@ GoogleSpreadsheetsQuery = (filters, callback) ->
     unless query is `undefined`
       locache.remove "blueGuideData"
       data =
-        key: "0Alw0s_pQVmyXdEwxTjlaTlE3NnU0bl8wZEZxZTVHYnc"
+        key: "1oIbiG18FS7s-ttRumWmyZDSIbwKn7oV84w6vEC0XuUk"
         tq: query
 
       $.ajax

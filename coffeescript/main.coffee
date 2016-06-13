@@ -1,6 +1,6 @@
 query = undefined
 tab = undefined
-rev = 0.18
+rev = 0.19
 activeTab = undefined
 window.onload = ->
 

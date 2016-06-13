@@ -4,7 +4,7 @@ query = void 0;
 
 tab = void 0;
 
-rev = 0.18;
+rev = 0.19;
 
 activeTab = void 0;
 
