@@ -361,46 +361,24 @@
   float: left;
   list-style: none;
   margin-right: 20px;
+  line-height: 120px;
 }
-/* line 87, ../sass/_mixins.sass */
-.overlay-active #about .summary .logos li a {
-  display: block;
-  height: 100px;
-  text-indent: -1000em;
-  overflow: hidden;
-  background: url(../images/sponsors.png) 0 0 no-repeat;
-  background-size: 589px auto;
+/* line 47, ../sass/components/_overlay.sass */
+.overlay-active #about .summary .logos li img {
+  max-height: 120px;
+  max-width: 250px !important;
 }
-/* line 95, ../sass/_mixins.sass */
-.overlay-active #about .summary .logos li a.cchi {
-  width: 72px;
-}
-/* line 98, ../sass/_mixins.sass */
-.overlay-active #about .summary .logos li a.caring {
-  width: 130px;
-  background-position: -100px 0;
-}
-/* line 102, ../sass/_mixins.sass */
-.overlay-active #about .summary .logos li a.piton {
-  width: 140px;
-  background-position: -250px 0;
-}
-/* line 106, ../sass/_mixins.sass */
-.overlay-active #about .summary .logos li a.connect {
-  width: 180px;
-  background-position: -410px 0;
-}
-/* line 48, ../sass/components/_overlay.sass */
+/* line 52, ../sass/components/_overlay.sass */
 .overlay-active #map {
   border-right: none !important;
 }
-/* line 51, ../sass/components/_overlay.sass */
+/* line 55, ../sass/components/_overlay.sass */
 .overlay-active #map .leaflet-top.leaflet-left {
   margin-left: 7em;
   margin-top: 9em;
   width: 120%;
 }
-/* line 56, ../sass/components/_overlay.sass */
+/* line 60, ../sass/components/_overlay.sass */
 .overlay-active #map .leaflet-top.leaflet-left .leaflet-control-zoom {
   display: none;
 }
@@ -750,34 +728,6 @@
     margin-right: 5px;
     width: 45%;
   }
-  /* line 87, ../sass/_mixins.sass */
-  .overlay-active #about .summary .logos li a {
-    display: block;
-    height: 70px;
-    text-indent: -1000em;
-    overflow: hidden;
-    background: url(../images/sponsors.png) 0 0 no-repeat;
-    background-size: 412.3px auto;
-  }
-  /* line 95, ../sass/_mixins.sass */
-  .overlay-active #about .summary .logos li a.cchi {
-    width: 50.4px;
-  }
-  /* line 98, ../sass/_mixins.sass */
-  .overlay-active #about .summary .logos li a.caring {
-    width: 91px;
-    background-position: -70px 0;
-  }
-  /* line 102, ../sass/_mixins.sass */
-  .overlay-active #about .summary .logos li a.piton {
-    width: 98px;
-    background-position: -175px 0;
-  }
-  /* line 106, ../sass/_mixins.sass */
-  .overlay-active #about .summary .logos li a.connect {
-    width: 126.0px;
-    background-position: -287px 0;
-  }
   /* line 188, ../sass/components/_responsive-mobile.sass */
   .overlay-active #about .summary .logos li a {
     margin: 0 auto;
@@ -1068,6 +1018,7 @@ input[type="text"]:focus {
 /* line 75, ../sass/components/_style.sass */
 label {
   font-weight: bold;
+  display: block;
   margin-top: 1em;
   clear: left;
 }
