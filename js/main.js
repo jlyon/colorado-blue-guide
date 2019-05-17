@@ -70,8 +70,8 @@ window.onload = function() {
     locate: {
       html: ich.locateBtn()
     },
-    layerUrl: "http://a.tiles.mapbox.com/v3/albatrossdigital.map-i5m0mag7/{z}/{x}/{y}.png",
-    retinaLayerUrl: "http://a.tiles.mapbox.com/v3/albatrossdigital.map-bqcirtj9/{z}/{x}/{y}.png",
+    layerUrl: "https://a.tiles.mapbox.com/v3/albatrossdigital.map-i5m0mag7/{z}/{x}/{y}.png",
+    retinaLayerUrl: "https://a.tiles.mapbox.com/v3/albatrossdigital.map-bqcirtj9/{z}/{x}/{y}.png",
     fields: filters.displayFields,
     tabs: filters.tabs,
     pagerSize: window.responsive !== "mobile" ? 25 : 10

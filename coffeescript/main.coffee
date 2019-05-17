@@ -39,11 +39,11 @@ window.onload = ->
     jQuery.getJSON "json/data.json?rev="+rev, {}, (data) ->
       locache.set "blueGuideData", data
       query = new JsonQuery "body", data
-    
+
   # Manually set the map height with JS (couldn't make this work with CSS)
   if window.responsive isnt "mobile" then $('.row-fluid>div').height $(window).height() - $('.navbar').height()
 
-  params = 
+  params =
     id: "map"
     updateSelector: "body"
     draw: true
@@ -56,16 +56,16 @@ window.onload = ->
       provider: "Google"
       settings:
         searchLabel: "Search for address..."
-        zoomLevel: 13 
+        zoomLevel: 13
         showMarker: false
         open: true
-    locate: {html: ich.locateBtn()}   
-    layerUrl: "http://a.tiles.mapbox.com/v3/albatrossdigital.map-i5m0mag7/{z}/{x}/{y}.png"
-    retinaLayerUrl: "http://a.tiles.mapbox.com/v3/albatrossdigital.map-bqcirtj9/{z}/{x}/{y}.png"
+    locate: {html: ich.locateBtn()}
+    layerUrl: "https://a.tiles.mapbox.com/v3/albatrossdigital.map-i5m0mag7/{z}/{x}/{y}.png"
+    retinaLayerUrl: "https://a.tiles.mapbox.com/v3/albatrossdigital.map-bqcirtj9/{z}/{x}/{y}.png"
     fields: filters.displayFields
     tabs: filters.tabs
     pagerSize: if window.responsive isnt "mobile" then 25 else 10
-  #if window.responsive isnt "mobile" or 1 is 1 
+  #if window.responsive isnt "mobile" or 1 is 1
 
   # Add map
   map = new Map params
@@ -77,7 +77,7 @@ window.onload = ->
 
   map.map.on "geosearch_showlocation", (e) ->
     locationUpdated(new L.LatLng(e.Location.Y, e.Location.X), e.Location.Label)
- 
+
   map.map.on "locationfound", (e) ->
     locationUpdated(e.latlng, "your location")
 
@@ -99,7 +99,7 @@ window.onload = ->
 
 
   # Add overlay (for start page)
-  
+
   if window.responsive is "mobile"
     $about = ich.about()
     ###$search = $("#map .leaflet-top.leaflet-left").clone()
@@ -130,7 +130,7 @@ window.onload = ->
       newZoom = 13 if newZoom < 0
       map.map.setZoom newZoom
       map.forceZoom = parseInt(map.forceZoom) + 1
-    else 
+    else
       map.drawMarkers data, pagerStart
       $('#show-markers').addClass "icon-spin"
       $("#tabs a:eq(0)").addClass("active") if !activeTab?
@@ -149,12 +149,11 @@ window.onload = ->
     filters.constructQuery()
     #updateMarkers undefined
     activate()
-    
-    
+
+
   resizeMap = ->
     window.setTimeout ->
       map.map.invalidateSize animate: true
     , 500
 
   return
-
